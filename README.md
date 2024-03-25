@@ -1,2 +1,0 @@
-# OrderApp
-Mini-Project

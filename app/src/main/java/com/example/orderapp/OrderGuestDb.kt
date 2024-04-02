@@ -1,14 +1,17 @@
 package com.example.orderapp
 
-class Product(val name: String, val prize: Int)
-class Category(val type: String, val products: List<Product>)
-class Menu(val categories: List<Category>)
-
 object MenuDb {
-    var menu: Menu = Menu(listOf())
+    var menu: Menu = menuMockData() //TODO fetch the menu from the db
 }
 
-fun mockData(db: MenuDb) {
+object OrderDb {
+    fun submitOrder() {
+        //TODO submit the order to the db
+        Guest.order.clear()
+    }
+}
+
+fun menuMockData(): Menu {
     val p1 = Product("Pizza Margarita", 51)
     val p2 = Product("Pizza Pepperoni ", 52)
     val p3 = Product("Pizza Hawaii", 53)
@@ -30,6 +33,5 @@ fun mockData(db: MenuDb) {
     val s5 = Product("Pina Colada", 20)
     val drink = Category("Drinks", listOf(s1, s2, s3, s4, s5))
 
-    val menu = Menu(listOf(pizza, dessert, drink))
-    db.menu = menu
+    return Menu(listOf(pizza, dessert, drink))
 }

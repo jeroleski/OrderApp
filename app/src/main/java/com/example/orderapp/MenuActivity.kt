@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +25,10 @@ class MenuActivity : AppCompatActivity() {
             val basketIntent = Intent(this, BasketActivity::class.java)
             startActivity(basketIntent)
         }
+
+
+        val fragmentManager = supportFragmentManager
+        fragmentManager.beginTransaction().replace(R.id.productContainer, ProductFragment()).commit()
 
     }
 }

@@ -6,12 +6,17 @@ class Category(val type: String, val products: List<Product>)
 class Menu(val categories: List<Category>)
 
 class OrderProduct(val product: Product) {
-    var quantity: UInt = 1u
+    var quantity: Int = 1
 }
 
 object Guest {
-    var table: UInt = 0u
+    var table: Int = 0
     var order: MutableList<OrderProduct> = mutableListOf()
+
+    fun count(p: Product): Int {
+        val o = order.find {o -> o.product == p} ?: return 0
+        return o.quantity
+    }
 
     fun addProduct(p: Product) {
         val o = order.find {o -> o.product == p}
@@ -25,7 +30,7 @@ object Guest {
     fun removeProduct(p: Product) {
         val o = order.find { o -> o.product == p} ?: return
 
-        if (o.quantity == 1u)
+        if (o.quantity <= 1)
             order.remove(o)
         else
             o.quantity--

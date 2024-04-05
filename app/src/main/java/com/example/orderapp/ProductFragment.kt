@@ -8,18 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 /**
  * A fragment representing a list of Products.
  */
 class ProductFragment : Fragment() {
-    private var columnCount = 1
+    private var categoryIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
+            categoryIndex = it.getInt(ARG_CATEGORY_INDEX)
         }
     }
 
@@ -29,30 +30,41 @@ class ProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_product_list, container, false)
+        view.findViewById<RecyclerView>(R.id.list)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = ProductRecyclerViewAdapter(MenuDb.menu.categories[0].products)
+            with(view.findViewById<RecyclerView>(R.id.list)) {
+                //TODO remove
+//                layoutManager = when {
+//                    columnCount <= 1 -> LinearLayoutManager(context)
+//                    else -> GridLayoutManager(context, columnCount)
+//                }
+                adapter = ProductRecyclerViewAdapter(MenuDb.menu.categories[categoryIndex].products)
             }
-        }
+
         return view
     }
 
-    companion object {
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // TODO: Customize parameter initialization
+        val btnHeader = view.findViewById<Button>(R.id.btnHeader)
+        btnHeader.setOnClickListener {
+            val productList = view.findViewById<View>(R.id.list)
+            if (productList.visibility == View.VISIBLE)
+                productList.visibility = View.GONE
+            else
+                productList.visibility = View.VISIBLE
+        }
+    }
+
+    companion object {
+        const val ARG_CATEGORY_INDEX = "category_name"
+
         @JvmStatic
-        fun newInstance(columnCount: Int) =
+        fun newInstance(category: Category) =
             ProductFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
+                    putInt(ARG_CATEGORY_INDEX, category.id)
                 }
             }
     }

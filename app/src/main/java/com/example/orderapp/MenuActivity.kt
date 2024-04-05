@@ -28,7 +28,7 @@ class MenuActivity : AppCompatActivity() {
 
 
         val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction().replace(R.id.productContainer, ProductFragment()).commit()
+        fragmentManager.beginTransaction().replace(R.id.productContainer, ProductFragment.newInstance(MenuDb.menu.categories[1])).commit()
 
     }
 }

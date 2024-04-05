@@ -57,5 +57,4 @@ class ProductRecyclerViewAdapter(
             return super.toString() + " '${tvProductName.text}'"
         }
     }
-
 }

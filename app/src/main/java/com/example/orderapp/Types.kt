@@ -1,8 +1,8 @@
 package com.example.orderapp
 
 //TODO maybe a data class
-class Product(val name: String, val prize: Int)
-class Category(val type: String, val products: List<Product>)
+class Product(val id: Int, val name: String, val prize: Int)
+class Category(val id : Int, val name: String, val products: List<Product>)
 class Menu(val categories: List<Category>)
 
 class OrderProduct(val product: Product) {

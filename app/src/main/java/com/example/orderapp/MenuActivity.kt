@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import com.example.orderapp.fragments.CategoryFragment
+import com.example.orderapp.fragments.ProductFragment
+import com.example.orderapp.types.Guest
 
 class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +29,9 @@ class MenuActivity : AppCompatActivity() {
         }
 
 
+        //TODO change to CategoryFragment
         val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction().replace(R.id.productContainer, ProductFragment.newInstance(MenuDb.menu.categories[1])).commit()
+        fragmentManager.beginTransaction().replace(R.id.categoryContainer, ProductFragment()).commit()
 
     }
 }

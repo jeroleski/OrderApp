@@ -3,7 +3,10 @@ package com.example.orderapp
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.orderapp.fragments.ProductFragment
+import com.example.orderapp.types.Guest
 
 class BasketActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,9 +23,9 @@ class BasketActivity : AppCompatActivity() {
 
         val btnMenu: Button = findViewById(R.id.btnMenu)
         btnMenu.setOnClickListener {
-            //Switch to basket activity
-            val basketIntent = Intent(this, BasketActivity::class.java)
-            startActivity(basketIntent)
+            //Switch to menu activity
+            val menuIntent = Intent(this, MenuActivity::class.java)
+            startActivity(menuIntent)
         }
 
         val btnSubmit: Button = findViewById(R.id.btnSubmit)
@@ -34,5 +37,11 @@ class BasketActivity : AppCompatActivity() {
             val menuIntent = Intent(this, MenuActivity::class.java)
             startActivity(menuIntent)
         }
+
+        val tvTotal: TextView = findViewById(R.id.tvTotal)
+        tvTotal.text = "Total prize: ${Guest.totalPrice()} - Number of products: ${Guest.totalCount()}"
+
+//        val fragmentManager = supportFragmentManager
+//        fragmentManager.beginTransaction().replace(R.id.categoryContainer, ProductFragment.newInstance()).commit()
     }
 }

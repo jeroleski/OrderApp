@@ -1,13 +1,13 @@
-package com.example.orderapp
+package com.example.orderapp.fragments
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
+import com.example.orderapp.types.Category
 import com.example.orderapp.databinding.FragmentCategoryColBinding
 
 /**
@@ -42,7 +42,9 @@ class CategoryRecyclerViewAdapter(
                 productList.visibility = View.VISIBLE
         }
 
-        fragmentManager.beginTransaction().replace(holder.productContainer.id, ProductFragment.newInstance(category)).commit()
+        fragmentManager.beginTransaction().replace(holder.productContainer.id,
+            ProductFragment.newInstance(category)
+        ).commit()
     }
 
     override fun getItemCount(): Int = values.size

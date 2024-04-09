@@ -1,5 +1,10 @@
 package com.example.orderapp
 
+import com.example.orderapp.types.Category
+import com.example.orderapp.types.Guest
+import com.example.orderapp.types.Menu
+import com.example.orderapp.types.Product
+
 object MenuDb {
     var menu: Menu = menuMockData() //TODO fetch the menu from the db
 }

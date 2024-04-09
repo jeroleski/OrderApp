@@ -1,15 +1,13 @@
-package com.example.orderapp
+package com.example.orderapp.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.fragment.app.FragmentManager
+import com.example.orderapp.MenuDb
+import com.example.orderapp.R
 
 /**
  * A fragment representing a list of Items.

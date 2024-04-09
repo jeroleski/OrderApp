@@ -1,10 +1,12 @@
-package com.example.orderapp
+package com.example.orderapp.fragments
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.example.orderapp.types.Guest
+import com.example.orderapp.types.Product
 import com.example.orderapp.databinding.FragmentProductRowBinding
 
 /**

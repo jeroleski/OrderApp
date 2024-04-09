@@ -1,4 +1,4 @@
-package com.example.orderapp
+package com.example.orderapp.types
 
 //TODO maybe a data class
 class Product(val id: Int, val name: String, val prize: Int)
@@ -14,12 +14,12 @@ object Guest {
     var order: MutableList<OrderProduct> = mutableListOf()
 
     fun count(p: Product): Int {
-        val o = order.find {o -> o.product == p} ?: return 0
+        val o = order.find { o -> o.product == p} ?: return 0
         return o.quantity
     }
 
     fun addProduct(p: Product) {
-        val o = order.find {o -> o.product == p}
+        val o = order.find { o -> o.product == p}
 
         if (o == null)
             order.add(OrderProduct(p))

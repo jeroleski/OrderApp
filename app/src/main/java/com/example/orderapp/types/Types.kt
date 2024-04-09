@@ -35,4 +35,9 @@ object Guest {
         else
             o.quantity--
     }
+
+
+    fun totalCount() = order.fold(0) { acc, op -> acc + op.quantity }
+
+    fun totalPrice() = order.fold(0) { acc, op -> acc + (op.quantity * op.product.prize) }
 }

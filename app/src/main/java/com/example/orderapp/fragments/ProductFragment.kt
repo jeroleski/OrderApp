@@ -44,21 +44,8 @@ class ProductFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val btnHeader = view.findViewById<Button>(R.id.btnHeader)
-        btnHeader.setOnClickListener {
-            val productList = view.findViewById<View>(R.id.list)
-            if (productList.visibility == View.VISIBLE)
-                productList.visibility = View.GONE
-            else
-                productList.visibility = View.VISIBLE
-        }
-    }
-
     companion object {
-        const val ARG_CATEGORY_INDEX = "category_name"
+        const val ARG_CATEGORY_INDEX = "category_index"
 
         @JvmStatic
         fun newInstance(category: Category) =

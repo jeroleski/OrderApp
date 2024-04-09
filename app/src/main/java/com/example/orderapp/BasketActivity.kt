@@ -14,7 +14,7 @@ class BasketActivity : AppCompatActivity() {
         setContentView(R.layout.activity_basket)
 
         val btnTable: Button = findViewById(R.id.btnTable)
-        btnTable.text = "Table Number\n${Guest.table}"
+        btnTable.text = getString(R.string.btn_tableNumber, Guest.table)
         btnTable.setOnClickListener {
             //Switch to signin activity
             val signinActivit = Intent(this, SigninActivity::class.java)
@@ -38,10 +38,14 @@ class BasketActivity : AppCompatActivity() {
             startActivity(menuIntent)
         }
 
-        val tvTotal: TextView = findViewById(R.id.tvTotal)
-        tvTotal.text = "Total prize: ${Guest.totalPrice()} - Number of products: ${Guest.totalCount()}"
+        val tvTotalPrize: TextView = findViewById(R.id.tvTotalPrize)
+        tvTotalPrize.text = getString(R.string.basket_totalPrize, Guest.totalPrice())
 
-//        val fragmentManager = supportFragmentManager
-//        fragmentManager.beginTransaction().replace(R.id.categoryContainer, ProductFragment.newInstance()).commit()
+        val tvTotalCount: TextView = findViewById(R.id.tvTotalCount)
+        tvTotalCount.text = getString(R.string.basket_totalCount, Guest.totalCount())
+
+        //TODO rename
+        val fragmentManager = supportFragmentManager
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, ProductFragment()).commit()
     }
 }

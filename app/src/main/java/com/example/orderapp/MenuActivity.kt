@@ -14,7 +14,7 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
 
         val btnTable: Button = findViewById(R.id.btnTable)
-        btnTable.text = "Table Number\n${Guest.table}"
+        btnTable.text = getString(R.string.btn_tableNumber, Guest.table)
         btnTable.setOnClickListener {
             //Switch to signin activity
             val signinActivit = Intent(this, SigninActivity::class.java)

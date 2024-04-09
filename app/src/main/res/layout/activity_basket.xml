@@ -9,7 +9,7 @@
         android:id="@+id/btnTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Table Number"
+        android:text="@string/table_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -17,7 +17,7 @@
         android:id="@+id/btnMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back To Menu"
+        android:text="@string/btn_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Review Basket"
+        android:text="@string/basket_msg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit Order"
+        android:text="@string/btn_submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -45,17 +45,27 @@
         android:name="com.example.orderapp.fragments.ProductFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/tvTotalPrize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvReview" />
 
     <TextView
-        android:id="@+id/tvTotal"
+        android:id="@+id/tvTotalPrize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="total"
+        android:layout_marginBottom="16dp"
+        android:text="@string/basket_totalPrize"
         app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTotalCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/basket_totalCount"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotalPrize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalPrize" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

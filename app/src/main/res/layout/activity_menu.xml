@@ -9,7 +9,7 @@
         android:id="@+id/btnTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Table Number"
+        android:text="@string/table_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -17,7 +17,7 @@
         android:id="@+id/btnBasket"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your Basket"
+        android:text="@string/btn_basket"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Choose Products"
+        android:text="@string/menu_msg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

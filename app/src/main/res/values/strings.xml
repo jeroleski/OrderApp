@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">OrderApp</string>
+
+<!--Messages-->
+    <string name="signin_msg">Welcome</string>
+    <string name="menu_msg">Choose Products</string>
+    <string name="basket_msg">Review Basket</string>
+
+<!--Labels-->
+    <string name="table_number">Table Number</string>
+    <string name="basket_totalPrize">Total Prize: %1$d</string>
+    <string name="basket_totalCount">Number Of Products: %1$d</string>
+
+<!--Buttons-->
+    <string name="btn_tableNumber">Table Number: %1$d</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_basket">Your Basket</string>
+    <string name="btn_menu">Back To Menu</string>
+    <string name="btn_submit">Submit Order</string>
+    <string name="btn_rmv">-</string>
+    <string name="btn_add">+</string>
 </resources>

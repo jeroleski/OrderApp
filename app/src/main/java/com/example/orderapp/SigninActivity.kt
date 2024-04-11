@@ -13,13 +13,20 @@ class SigninActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signin)
 
         val numTable: EditText = findViewById(R.id.numTable)
-        val btn: Button = findViewById(R.id.btnNext)
-        btn.setOnClickListener {
+        val btnNext: Button = findViewById(R.id.btnNext)
+        btnNext.setOnClickListener {
             //Acquire table number
             Guest.table = numTable.text.toString().toInt()
             //Switch to menu activity
             val menuIntent = Intent(this, MenuActivity::class.java)
             startActivity(menuIntent)
+        }
+
+        val btnServer: Button = findViewById(R.id.btnServer)
+        btnServer.setOnClickListener {
+            //Switch to menu activity
+            val ordersIntent = Intent(this, OrdersActivity::class.java)
+            startActivity(ordersIntent)
         }
     }
 }

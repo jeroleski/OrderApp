@@ -3,15 +3,23 @@ package com.example.orderapp
 import com.example.orderapp.types.Category
 import com.example.orderapp.types.Guest
 import com.example.orderapp.types.Menu
+import com.example.orderapp.types.Order
 import com.example.orderapp.types.Product
+import com.example.orderapp.types.Server
 
 object MenuDb {
     var menu: Menu = menuMockData() //TODO fetch the menu from the db
+
 }
 
 object OrderDb {
     fun submitOrder() {
         //TODO submit the order to the db
+        //TODO set id
+
+        val o = Order(0, Guest.table)
+        o.products.addAll(Guest.order)
+        Server.orders.add(o)
         Guest.order.clear()
     }
 }

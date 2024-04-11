@@ -1,4 +1,4 @@
-package com.example.orderapp
+package com.example.orderapp.network
 
 import com.example.orderapp.types.Category
 import com.example.orderapp.types.Guest

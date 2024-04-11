@@ -36,7 +36,7 @@ object Guest {
 object Server {
     val orders: MutableList<Order> = mutableListOf()
 
-    fun getOrders(): MutableList<Order> {
+    fun getFilteredOrders(): MutableList<Order> {
         //TODO apply filter
         return orders
     }

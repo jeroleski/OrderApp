@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.orderapp.MenuDb
+import com.example.orderapp.network.MenuDb
 import com.example.orderapp.R
 import com.example.orderapp.types.Category
 
@@ -35,7 +35,7 @@ class ProductFragment : Fragment() {
         with(view.findViewById<RecyclerView>(R.id.list)) {
             //TODO set to per category
 //            adapter = ProductRecyclerViewAdapter(MenuDb.menu.categories[categoryIndex].products)
-            val allProducts = MenuDb.menu.categories.flatMap {c -> c.products}
+            val allProducts = MenuDb.menu.categories.flatMap { c -> c.products}
             adapter = ProductRecyclerViewAdapter(allProducts)
         }
 

@@ -40,12 +40,12 @@ class OrderListViewAdapter(
         val view: View = if (convertView != null) convertView
         else {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            inflater.inflate(R.layout.fragment_menu_category, null)
+            inflater.inflate(R.layout.fragment_orders_order, null)
         }
 
         //TODO inflate correctly
-        val tvCategoryName: TextView = view.findViewById(R.id.tvCategoryName)
-        tvCategoryName.text = order.tableNumber.toString()
+        val tvOrderTable: TextView = view.findViewById(R.id.tvOrderTable)
+        tvOrderTable.text = order.tableNumber.toString()
 
         return view
     }
@@ -62,7 +62,7 @@ class OrderListViewAdapter(
         val view: View = if (convertView != null) convertView
         else {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            inflater.inflate(R.layout.fragment_menu_product, null)
+            inflater.inflate(R.layout.fragment_orders_product, null)
         }
 
         //TODO inflate correctly

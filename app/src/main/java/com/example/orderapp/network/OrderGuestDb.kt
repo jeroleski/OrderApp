@@ -53,18 +53,18 @@ fun ordersMockData(): MutableList<Order> {
     val menu = menuMockData()
 
     val o1 = Order(1, 1)
-    o1.products.add(OrderProduct(menu.categories[1].products[1]))
-    o1.products.add(OrderProduct(menu.categories[2].products[2]))
-    o1.products.add(OrderProduct(menu.categories[3].products[3]))
+    o1.products.add(OrderProduct(menu.categories[0].products[1]))
+    o1.products.add(OrderProduct(menu.categories[1].products[2]))
+    o1.products.add(OrderProduct(menu.categories[2].products[3]))
 
     val o2 = Order(2, 47)
+    o2.products.add(OrderProduct(menu.categories[1].products[1]))
     o2.products.add(OrderProduct(menu.categories[2].products[1]))
-    o2.products.add(OrderProduct(menu.categories[3].products[1]))
 
     val o3 = Order(3, 29)
-    o3.products.add(OrderProduct(menu.categories[1].products[1]))
-    o3.products.add(OrderProduct(menu.categories[3].products[2]))
-    o3.products.add(OrderProduct(menu.categories[2].products[3]))
+    o3.products.add(OrderProduct(menu.categories[0].products[1]))
+    o3.products.add(OrderProduct(menu.categories[2].products[2]))
+    o3.products.add(OrderProduct(menu.categories[1].products[3]))
 
     return mutableListOf(o1, o2, o3)
 }

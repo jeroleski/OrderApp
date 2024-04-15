@@ -27,8 +27,8 @@ class OrdersActivity : AppCompatActivity() {
             startActivity(filterIntent)
         }
 
-        val groupList = OrderDb.orders
-        val orderCollection = OrderDb.orders.associateBy({ o -> o.id.toString() }, { o -> o.products })
+        val groupList = OrderDb.getFilteredOrders()
+        val orderCollection = OrderDb.getFilteredOrders().associateBy({ o -> o.id.toString() }, { o -> o.products })
         val expandableListView: ExpandableListView = findViewById(R.id.orderList)
         val expandableListAdapter = OrderListViewAdapter(this, groupList, orderCollection)
         expandableListView.setAdapter(expandableListAdapter)

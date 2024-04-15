@@ -15,9 +15,9 @@ class OrdersActivity : AppCompatActivity() {
 
         val btnTable: Button = findViewById(R.id.btnTable)
         btnTable.setOnClickListener {
-            //Switch to signin activity
-            val signinIntent = Intent(this, SigninActivity::class.java)
-            startActivity(signinIntent)
+            //Switch to table activity
+            val tableIntent = Intent(this, TableActivity::class.java)
+            startActivity(tableIntent)
         }
 
         val btnFilters: Button = findViewById(R.id.btnFilter)

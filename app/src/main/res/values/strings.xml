@@ -2,7 +2,7 @@
     <string name="app_name">OrderApp</string>
 
     <!--Messages-->
-    <string name="signin_msg">Welcome</string>
+    <string name="table_msg">Welcome</string>
     <string name="menu_msg">Choose Products</string>
     <string name="basket_msg">Review Basket</string>
     <string name="orders_msg">View Orders</string>

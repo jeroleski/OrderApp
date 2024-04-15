@@ -15,9 +15,9 @@ class BasketActivity : AppCompatActivity() {
         val btnTable: Button = findViewById(R.id.btnTable)
         btnTable.text = getString(R.string.btn_tableNumber, Guest.table)
         btnTable.setOnClickListener {
-            //Switch to signin activity
-            val signinIntent = Intent(this, SigninActivity::class.java)
-            startActivity(signinIntent)
+            //Switch to table activity
+            val tableIntent = Intent(this, TableActivity::class.java)
+            startActivity(tableIntent)
         }
 
         val btnMenu: Button = findViewById(R.id.btnMenu)

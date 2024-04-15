@@ -23,9 +23,9 @@ class OrderListViewAdapter(
     override fun getGroup(groupPosition: Int) = groupList[groupPosition]
 
     override fun getChild(groupPosition: Int, childPosition: Int) = orderCollection[groupList[groupPosition].id.toString()]?.get(childPosition) as OrderProduct
-    override fun getGroupId(groupPosition: Int) = groupPosition.toLong()
+    override fun getGroupId(groupPosition: Int) = getGroup(groupPosition).id.toLong()
 
-    override fun getChildId(groupPosition: Int, childPosition: Int) = childPosition.toLong()
+    override fun getChildId(groupPosition: Int, childPosition: Int) = getChild(groupPosition, childPosition).product.id.toLong()
 
     override fun hasStableIds() = true
 
@@ -43,7 +43,6 @@ class OrderListViewAdapter(
             inflater.inflate(R.layout.fragment_orders_order, null)
         }
 
-        //TODO inflate correctly
         val tvOrderTable: TextView = view.findViewById(R.id.tvOrderTable)
         tvOrderTable.text = order.tableNumber.toString()
 
@@ -65,13 +64,10 @@ class OrderListViewAdapter(
             inflater.inflate(R.layout.fragment_orders_product, null)
         }
 
-        //TODO inflate correctly
         val tvProductName: TextView = view.findViewById(R.id.tvProductName)
         tvProductName.text = orderProduct.product.name
-        val tvProductQuantity: TextView = view.findViewById(R.id.tvProductQuantity)
+        val tvProductQuantity: TextView = view.findViewById(R.id.tvProductPrize)
         tvProductQuantity.text = orderProduct.quantity.toString()
-
-        //TODO popup action handling
 
         return view
     }

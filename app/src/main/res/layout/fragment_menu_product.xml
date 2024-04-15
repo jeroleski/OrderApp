@@ -14,10 +14,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvProductPrize"
+        android:id="@+id/tvProductQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:text="@string/menu_price"
         app:layout_constraintBottom_toBottomOf="@+id/tvProductName"
         app:layout_constraintStart_toEndOf="@+id/tvProductName"
         app:layout_constraintTop_toTopOf="@+id/tvProductName" />
@@ -29,11 +30,11 @@
         android:layout_marginStart="16dp"
         android:text="@string/btn_rmv"
         app:layout_constraintBottom_toBottomOf="@+id/tvProductName"
-        app:layout_constraintStart_toEndOf="@+id/tvProductPrize"
+        app:layout_constraintStart_toEndOf="@+id/tvProductQuantity"
         app:layout_constraintTop_toTopOf="@+id/tvProductName" />
 
     <TextView
-        android:id="@+id/tvProductQuantity"
+        android:id="@+id/tvProductPrize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,7 +49,7 @@
         android:layout_marginStart="16dp"
         android:text="@string/btn_add"
         app:layout_constraintBottom_toBottomOf="@+id/tvProductName"
-        app:layout_constraintStart_toEndOf="@+id/tvProductQuantity"
+        app:layout_constraintStart_toEndOf="@+id/tvProductPrize"
         app:layout_constraintTop_toTopOf="@+id/tvProductName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

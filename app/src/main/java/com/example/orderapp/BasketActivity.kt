@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.orderapp.fragments.BasketRecyclerViewAdapter
 import com.example.orderapp.types.Guest
 
 class BasketActivity : AppCompatActivity() {
@@ -27,10 +30,12 @@ class BasketActivity : AppCompatActivity() {
             startActivity(menuIntent)
         }
 
+        val recyclerView: RecyclerView = findViewById(R.id.listBasket)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = BasketRecyclerViewAdapter(applicationContext, Guest.order)
+
         val btnSubmit: Button = findViewById(R.id.btnSubmit)
         btnSubmit.setOnClickListener {
-            //TODO Submit order
-            //TODO save receipt to gallery
             Guest.submitOrder()
             //Switch to menu activity
             val menuIntent = Intent(this, MenuActivity::class.java)

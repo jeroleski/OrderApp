@@ -7,6 +7,10 @@ class Menu(val categories: List<Category>)
 
 class OrderProduct(val product: Product) {
     var quantity: Int = 1
+
+    fun totalPrize(): Int {
+        return quantity * product.prize
+    }
 }
 
 class Order(val id: Int, val tableNumber: Int) {

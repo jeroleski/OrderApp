@@ -10,12 +10,15 @@
 
     <!--Labels-->
     <string name="table_number">Table Number</string>
-    <string name="basket_totalPrize">Total Prize: %1$d</string>
+    <string name="menu_price">%1$d €</string>
+    <string name="basket_quantity">x %1$d</string>
+    <string name="basket_prize">= %1$d €</string>
+    <string name="basket_totalPrize">Total Prize: %1$d €</string>
     <string name="basket_totalCount">Number Of Products: %1$d</string>
 
     <!--Buttons-->
     <string name="btn_tableNumber">Table Number: %1$d</string>
-    <string name="btn_next">Next</string>
+    <string name="btn_next">See Menu</string>
     <string name="btn_server">See Orders</string>
     <string name="btn_basket">Your Basket</string>
     <string name="btn_menu">Back To Menu</string>

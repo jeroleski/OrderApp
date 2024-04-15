@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tvProductName"
@@ -14,21 +14,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvProductPrize"
+        android:id="@+id/tvProductQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:text="@string/basket_quantity"
         app:layout_constraintBottom_toBottomOf="@+id/tvProductName"
         app:layout_constraintStart_toEndOf="@+id/tvProductName"
         app:layout_constraintTop_toTopOf="@+id/tvProductName" />
 
     <TextView
-        android:id="@+id/tvProductQuantity"
+        android:id="@+id/tvProductPrize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:text="@string/basket_prize"
         app:layout_constraintBottom_toBottomOf="@+id/tvProductName"
-        app:layout_constraintStart_toEndOf="@+id/tvProductPrize"
+        app:layout_constraintStart_toEndOf="@+id/tvProductQuantity"
         app:layout_constraintTop_toTopOf="@+id/tvProductName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

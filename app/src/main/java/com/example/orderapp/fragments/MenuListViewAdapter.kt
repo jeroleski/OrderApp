@@ -26,9 +26,9 @@ class MenuListViewAdapter(
 
     override fun getChild(groupPosition: Int, childPosition: Int) = menuCollection[groupList[groupPosition].name]?.get(childPosition) as Product
 
-    override fun getGroupId(groupPosition: Int) = groupPosition.toLong()
+    override fun getGroupId(groupPosition: Int) = getGroup(groupPosition).id.toLong()
 
-    override fun getChildId(groupPosition: Int, childPosition: Int) = childPosition.toLong()
+    override fun getChildId(groupPosition: Int, childPosition: Int) = getChild(groupPosition, childPosition).id.toLong()
 
     override fun hasStableIds() = true
 
@@ -46,7 +46,6 @@ class MenuListViewAdapter(
             inflater.inflate(R.layout.fragment_menu_category, null)
         }
 
-        //TODO inflate correctly
         val tvCategoryName: TextView = view.findViewById(R.id.tvCategoryName)
         tvCategoryName.text = category.name
 
@@ -68,12 +67,11 @@ class MenuListViewAdapter(
             inflater.inflate(R.layout.fragment_menu_product, null)
         }
 
-        //TODO inflate correctly
         val tvProductName: TextView = view.findViewById(R.id.tvProductName)
         tvProductName.text = product.name
-        val tvProductPrize: TextView = view.findViewById(R.id.tvProductPrize)
-        tvProductPrize.text = product.prize.toString()
-        val tvInBasket: TextView = view.findViewById(R.id.tvProductQuantity)
+        val tvProductPrize: TextView = view.findViewById(R.id.tvProductQuantity)
+        tvProductPrize.text = context.getString(R.string.menu_price, product.prize)
+        val tvInBasket: TextView = view.findViewById(R.id.tvProductPrize)
         tvInBasket.text = Guest.count(product).toString()
 
         val btnRmvProduct: Button = view.findViewById(R.id.btnRmvProduct)
@@ -87,8 +85,6 @@ class MenuListViewAdapter(
             Guest.addProduct(product)
             tvInBasket.text = Guest.count(product).toString()
         }
-
-        //TODO popup action handling
 
         return view
     }

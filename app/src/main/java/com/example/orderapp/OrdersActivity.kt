@@ -29,12 +29,14 @@ class OrdersActivity : AppCompatActivity() {
 
         val groupList = OrderDb.getFilteredOrders()
         val orderCollection = OrderDb.getFilteredOrders().associateBy({ o -> o.id.toString() }, { o -> o.products })
-        val expandableListView: ExpandableListView = findViewById(R.id.orderList)
+        val expandableListView: ExpandableListView = findViewById(R.id.listOrders)
         val expandableListAdapter = OrderListViewAdapter(this, groupList, orderCollection)
         expandableListView.setAdapter(expandableListAdapter)
-//        expandableListView.setOnChildClickListener(ExpandableListView.OnGroupClickListener {
-//            override fun onGroup
-//        })
-        //TODO fill in ^^
+        var lastExpandedPosition = -1
+        expandableListView.setOnGroupExpandListener(ExpandableListView.OnGroupExpandListener { i ->
+            if (lastExpandedPosition != -1 && i != lastExpandedPosition)
+                expandableListView.collapseGroup(lastExpandedPosition)
+            lastExpandedPosition = i
+        })
       }
 }

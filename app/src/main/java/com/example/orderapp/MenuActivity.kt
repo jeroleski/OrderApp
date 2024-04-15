@@ -31,12 +31,14 @@ class MenuActivity : AppCompatActivity() {
 
         val groupList = MenuDb.menu.categories
         val menuCollection = MenuDb.menu.categories.associateBy({ c -> c.name }, { c -> c.products })
-        val expandableListView: ExpandableListView = findViewById(R.id.orderList)
+        val expandableListView: ExpandableListView = findViewById(R.id.listMenu)
         val expandableListAdapter = MenuListViewAdapter(this, groupList, menuCollection)
         expandableListView.setAdapter(expandableListAdapter)
-//        expandableListView.setOnChildClickListener(ExpandableListView.OnGroupClickListener {
-//            override fun onGroup
-//        })
-        //TODO fill in ^^
+        var lastExpandedPosition = -1
+        expandableListView.setOnGroupExpandListener(ExpandableListView.OnGroupExpandListener { i ->
+            if (lastExpandedPosition != -1 && i != lastExpandedPosition)
+                expandableListView.collapseGroup(lastExpandedPosition)
+            lastExpandedPosition = i
+        })
     }
 }

@@ -30,6 +30,7 @@ object Guest {
     }
 
     fun submitOrder() {
+        //TODO save receipt to gallery
         //TODO submit the order to the db
         //TODO set id
 

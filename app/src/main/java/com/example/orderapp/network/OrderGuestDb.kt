@@ -1,25 +1,26 @@
 package com.example.orderapp.network
 
 import com.example.orderapp.types.Category
-import com.example.orderapp.types.Guest
 import com.example.orderapp.types.Menu
 import com.example.orderapp.types.Order
+import com.example.orderapp.types.OrderProduct
 import com.example.orderapp.types.Product
-import com.example.orderapp.types.Server
 
 object MenuDb {
     var menu: Menu = menuMockData() //TODO fetch the menu from the db
 }
 
 object OrderDb {
-    fun submitOrder() {
-        //TODO submit the order to the db
-        //TODO set id
+    var orders: MutableList<Order> = ordersMockData() //TODO fetch the orders from the db
 
-        val o = Order(0, Guest.table)
-        o.products.addAll(Guest.order)
-        Server.orders.add(o)
-        Guest.order.clear()
+    fun getFilteredOrders(): MutableList<Order> {
+        //TODO apply filter
+        return orders
+    }
+
+    fun finishOrder(order: Order) {
+        //TODO use id to remove
+        orders.remove(order)
     }
 }
 
@@ -46,4 +47,24 @@ fun menuMockData(): Menu {
     val drink = Category(2, "Drinks", listOf(s1, s2, s3, s4, s5))
 
     return Menu(listOf(pizza, dessert, drink))
+}
+
+fun ordersMockData(): MutableList<Order> {
+    val menu = menuMockData()
+
+    val o1 = Order(1, 1)
+    o1.products.add(OrderProduct(menu.categories[1].products[1]))
+    o1.products.add(OrderProduct(menu.categories[2].products[2]))
+    o1.products.add(OrderProduct(menu.categories[3].products[3]))
+
+    val o2 = Order(2, 47)
+    o2.products.add(OrderProduct(menu.categories[2].products[1]))
+    o2.products.add(OrderProduct(menu.categories[3].products[1]))
+
+    val o3 = Order(3, 29)
+    o3.products.add(OrderProduct(menu.categories[1].products[1]))
+    o3.products.add(OrderProduct(menu.categories[3].products[2]))
+    o3.products.add(OrderProduct(menu.categories[2].products[3]))
+
+    return mutableListOf(o1, o2, o3)
 }

@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.orderapp.fragments.OrderListViewAdapter
-import com.example.orderapp.types.Server
+import com.example.orderapp.network.OrderDb
 
 class OrdersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +27,8 @@ class OrdersActivity : AppCompatActivity() {
             startActivity(filterIntent)
         }
 
-        val groupList = Server.orders
-        val orderCollection = Server.orders.associateBy({ o -> o.id.toString() }, { o -> o.products })
+        val groupList = OrderDb.orders
+        val orderCollection = OrderDb.orders.associateBy({ o -> o.id.toString() }, { o -> o.products })
         val expandableListView: ExpandableListView = findViewById(R.id.orderList)
         val expandableListAdapter = OrderListViewAdapter(this, groupList, orderCollection)
         expandableListView.setAdapter(expandableListAdapter)

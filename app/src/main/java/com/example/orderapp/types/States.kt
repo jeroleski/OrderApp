@@ -1,5 +1,7 @@
 package com.example.orderapp.types
 
+import com.example.orderapp.network.OrderDb
+
 object Guest {
     var table: Int = 0
     var order: MutableList<OrderProduct> = mutableListOf()
@@ -27,22 +29,31 @@ object Guest {
             o.quantity--
     }
 
+    fun submitOrder() {
+        //TODO submit the order to the db
+        //TODO set id
+
+        val o = Order(0, table)
+        o.products.addAll(order)
+        OrderDb.orders.add(o)
+        order.clear()
+    }
 
     fun totalCount() = order.fold(0) { acc, op -> acc + op.quantity }
 
     fun totalPrice() = order.fold(0) { acc, op -> acc + (op.quantity * op.product.prize) }
 }
 
-object Server {
-    val orders: MutableList<Order> = mutableListOf()
-
-    fun getFilteredOrders(): MutableList<Order> {
-        //TODO apply filter
-        return orders
-    }
-
-    fun finishOrder(id: Int) {
-        val o = orders.find {o -> o.id == id}
-        orders.remove(o)
-    }
-}
+//object Server {
+//    val orders: MutableList<Order> = mutableListOf()
+//
+//    fun getFilteredOrders(): MutableList<Order> {
+//        //TODO apply filter
+//        return orders
+//    }
+//
+//    fun finishOrder(order: Order) {
+//        orders.remove(order)
+//        OrderDb.finishOrder(order)
+//    }
+//}

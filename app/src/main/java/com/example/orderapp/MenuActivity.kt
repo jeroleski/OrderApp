@@ -18,11 +18,11 @@ class MenuActivity : AppCompatActivity() {
         btnTable.text = getString(R.string.btn_tableNumber, Guest.table)
         btnTable.setOnClickListener {
             //Switch to signin activity
-            val signinActivity = Intent(this, SigninActivity::class.java)
-            startActivity(signinActivity)
+            val signinIntent = Intent(this, SigninActivity::class.java)
+            startActivity(signinIntent)
         }
 
-        val btnBasket: Button = findViewById(R.id.btnBasket)
+        val btnBasket: Button = findViewById(R.id.btnFilter)
         btnBasket.setOnClickListener {
             //Switch to basket activity
             val basketIntent = Intent(this, BasketActivity::class.java)
@@ -30,9 +30,9 @@ class MenuActivity : AppCompatActivity() {
         }
 
         val groupList = MenuDb.menu.categories
-        val orderCollection = MenuDb.menu.categories.associateBy( { c -> c.name}, { c -> c.products})
+        val menuCollection = MenuDb.menu.categories.associateBy({ c -> c.name }, { c -> c.products })
         val expandableListView: ExpandableListView = findViewById(R.id.orderList)
-        val expandableListAdapter = MenuListViewAdapter(this, groupList, orderCollection)
+        val expandableListAdapter = MenuListViewAdapter(this, groupList, menuCollection)
         expandableListView.setAdapter(expandableListAdapter)
 //        expandableListView.setOnChildClickListener(ExpandableListView.OnGroupClickListener {
 //            override fun onGroup

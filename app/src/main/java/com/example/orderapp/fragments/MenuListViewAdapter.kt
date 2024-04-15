@@ -73,7 +73,7 @@ class MenuListViewAdapter(
         tvProductName.text = product.name
         val tvProductPrize: TextView = view.findViewById(R.id.tvProductPrize)
         tvProductPrize.text = product.prize.toString()
-        val tvInBasket: TextView = view.findViewById(R.id.tvInBasket)
+        val tvInBasket: TextView = view.findViewById(R.id.tvProductQuantity)
         tvInBasket.text = Guest.count(product).toString()
 
         val btnRmvProduct: Button = view.findViewById(R.id.btnRmvProduct)

@@ -5,6 +5,8 @@
     <string name="signin_msg">Welcome</string>
     <string name="menu_msg">Choose Products</string>
     <string name="basket_msg">Review Basket</string>
+    <string name="orders_msg">View Orders</string>
+    <string name="filter_msg">Apply Filters</string>
 
     <!--Labels-->
     <string name="table_number">Table Number</string>
@@ -20,4 +22,8 @@
     <string name="btn_submit">Submit Order</string>
     <string name="btn_rmv">-</string>
     <string name="btn_add">+</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_done">Order Done</string>
+    <string name="btn_filters">Filters</string>
+
 </resources>

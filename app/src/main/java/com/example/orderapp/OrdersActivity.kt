@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.orderapp.fragments.OrderListViewAdapter
 import com.example.orderapp.network.MenuDb
-import java.util.Dictionary
 
 class OrdersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

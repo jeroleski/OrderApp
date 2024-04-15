@@ -5,22 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import android.widget.Button
 import android.widget.TextView
 import com.example.orderapp.R
+import com.example.orderapp.types.Category
+import com.example.orderapp.types.Guest
+import com.example.orderapp.types.Product
 
-class OrderListViewAdapter(
-    val context: Context,
-    val groupList: List<String>,
-    val orderCollection: Map<String, List<String>>)
+class MenuListViewAdapter(
+    private val context: Context,
+    private val groupList: List<Category>,
+    private val menuCollection: Map<String, List<Product>>)
     : BaseExpandableListAdapter() {
 
-    override fun getGroupCount() = orderCollection.size
+    override fun getGroupCount() = menuCollection.size
 
-    override fun getChildrenCount(groupPosition: Int) = orderCollection[groupList[groupPosition]]?.size ?: -1
+    override fun getChildrenCount(groupPosition: Int) = menuCollection[groupList[groupPosition].name]?.size ?: -1
 
     override fun getGroup(groupPosition: Int) = groupList[groupPosition]
 
-    override fun getChild(groupPosition: Int, childPosition: Int) = orderCollection[groupList[groupPosition]]?.get(childPosition) ?: ""
+    override fun getChild(groupPosition: Int, childPosition: Int) = menuCollection[groupList[groupPosition].name]?.get(childPosition) as Product
 
     override fun getGroupId(groupPosition: Int) = groupPosition.toLong()
 
@@ -34,7 +38,7 @@ class OrderListViewAdapter(
         convertView: View?,
         parent: ViewGroup?
     ): View {
-        val groupName = getGroup(groupPosition)
+        val category = getGroup(groupPosition)
 
         val view: View = if (convertView != null) convertView
         else {
@@ -44,7 +48,7 @@ class OrderListViewAdapter(
 
         //TODO inflate correctly
         val tvCategoryName: TextView = view.findViewById(R.id.tvCategoryName)
-        tvCategoryName.text = groupName
+        tvCategoryName.text = category.name
 
         return view
     }
@@ -56,7 +60,7 @@ class OrderListViewAdapter(
         convertView: View?,
         parent: ViewGroup?
     ): View {
-        val model = getChild(groupPosition, childPosition)
+        val product = getChild(groupPosition, childPosition)
 
         val view: View = if (convertView != null) convertView
         else {
@@ -66,7 +70,23 @@ class OrderListViewAdapter(
 
         //TODO inflate correctly
         val tvProductName: TextView = view.findViewById(R.id.tvProductName)
-        tvProductName.text = model
+        tvProductName.text = product.name
+        val tvProductPrize: TextView = view.findViewById(R.id.tvProductPrize)
+        tvProductPrize.text = product.prize.toString()
+        val tvInBasket: TextView = view.findViewById(R.id.tvInBasket)
+        tvInBasket.text = Guest.count(product).toString()
+
+        val btnRmvProduct: Button = view.findViewById(R.id.btnRmvProduct)
+        btnRmvProduct.setOnClickListener {
+            Guest.removeProduct(product)
+            tvInBasket.text = Guest.count(product).toString()
+        }
+
+        val btnAddProduct: Button = view.findViewById(R.id.btnAddProduct)
+        btnAddProduct.setOnClickListener {
+            Guest.addProduct(product)
+            tvInBasket.text = Guest.count(product).toString()
+        }
 
         //TODO popup action handling
 

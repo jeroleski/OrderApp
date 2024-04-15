@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.orderapp.fragments.ProductFragment
 import com.example.orderapp.network.OrderDb
 import com.example.orderapp.types.Guest
 
@@ -45,8 +44,8 @@ class BasketActivity : AppCompatActivity() {
         val tvTotalCount: TextView = findViewById(R.id.tvTotalCount)
         tvTotalCount.text = getString(R.string.basket_totalCount, Guest.totalCount())
 
-        //TODO rename
-        val fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, ProductFragment()).commit()
+//        //TODO rename
+//        val fragmentManager = supportFragmentManager
+//        fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, ProductFragment()).commit()
     }
 }

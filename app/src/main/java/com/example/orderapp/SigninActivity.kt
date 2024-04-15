@@ -16,7 +16,7 @@ class SigninActivity : AppCompatActivity() {
         val btnNext: Button = findViewById(R.id.btnNext)
         btnNext.setOnClickListener {
             //Acquire table number
-            Guest.table = numTable.text.toString().toInt()
+            Guest.table = numTable.text.toString().toIntOrNull() ?: 0
             //Switch to menu activity
             val menuIntent = Intent(this, MenuActivity::class.java)
             startActivity(menuIntent)

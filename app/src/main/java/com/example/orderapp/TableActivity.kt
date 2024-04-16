@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.example.orderapp.network.DbWrapper
+import com.example.orderapp.network.MenuDb
+import com.example.orderapp.network.OrderDb
+import com.example.orderapp.network.menuMockData
 import com.example.orderapp.types.Guest
 
 class TableActivity : AppCompatActivity() {
@@ -28,5 +32,21 @@ class TableActivity : AppCompatActivity() {
             val ordersIntent = Intent(this, OrdersActivity::class.java)
             startActivity(ordersIntent)
         }
+
+        dbSetup()
+    }
+
+    private fun dbSetup() {
+        val db = DbWrapper()
+        db.initialize(this)
+
+        for (category in menuMockData().categories) {
+            for (product in category.products) {
+                db.addMenuProduct(product, category.name)
+            }
+        }
+
+        MenuDb.menu = db.getMenu()
+        OrderDb.orders = db.getOrders()
     }
 }

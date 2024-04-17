@@ -43,16 +43,15 @@ object Guest {
     fun totalPrice() = order.fold(0) { acc, op -> acc + (op.quantity * op.product.prize) }
 }
 
-//object Server {
-//    val orders: MutableList<Order> = mutableListOf()
-//
-//    fun filterOrders(orders: List<Order>): MutableList<Order> {
-//        //TODO apply filter
-//        return orders.toMutableList()
-//    }
-//
-//    fun finishOrder(order: Order) {
-//        orders.remove(order)
-//        DbWrapper.removeOrder(order)
-//    }
-//}
+object Waiter {
+    fun getFilteredOrders(): List<Order> {
+        //TODO apply filter
+        return DbWrapper.orders
+    }
+
+    fun finishOrder(order: Order) {
+        //TODO change responsibility
+        DbWrapper.orders.remove(order)
+        DbWrapper.removeOrder(order)
+    }
+}

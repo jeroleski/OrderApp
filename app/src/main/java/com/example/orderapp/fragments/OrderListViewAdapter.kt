@@ -1,14 +1,19 @@
 package com.example.orderapp.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
+import com.example.orderapp.OrdersActivity
 import com.example.orderapp.R
 import com.example.orderapp.types.Order
 import com.example.orderapp.types.OrderProduct
+import com.example.orderapp.types.Waiter
 
 class OrderListViewAdapter(
     private val context: Context,
@@ -45,6 +50,12 @@ class OrderListViewAdapter(
 
         val tvOrderTable: TextView = view.findViewById(R.id.tvOrderTable)
         tvOrderTable.text = order.tableNumber.toString()
+        val btnDone: Button = view.findViewById(R.id.btnDone)
+        btnDone.setOnClickListener {
+            Waiter.finishOrder(order)
+            val ordersIntent = Intent(context, OrdersActivity::class.java)
+            startActivity(context, ordersIntent, null)
+        }
 
         return view
     }

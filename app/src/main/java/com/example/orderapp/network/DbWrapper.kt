@@ -114,7 +114,7 @@ object DbWrapper : ViewModel() {
             addOrderProduct(orderProduct, order.id)
     }
 
-//    fun removeOrder(order: Order) {
-//        //TODO implement remove using id
-//    }
+    fun removeOrder(order: Order) {
+        db.delete(DbSchema.Orders.TABLE, "${DbSchema.Orders.ID} = ?", arrayOf(order.id.toString()))
+    }
 }

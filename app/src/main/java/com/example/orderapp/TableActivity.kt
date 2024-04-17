@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.orderapp.network.DbWrapper
 import com.example.orderapp.network.MenuDb
@@ -40,11 +41,11 @@ class TableActivity : AppCompatActivity() {
         val db = DbWrapper()
         db.initialize(this)
 
-        for (category in menuMockData().categories) {
-            for (product in category.products) {
-                db.addMenuProduct(product, category.name)
-            }
-        }
+//        for (category in menuMockData().categories) {
+//            for (product in category.products) {
+//                db.addMenuProduct(product, category.name)
+//            }
+//        }
 
         MenuDb.menu = db.getMenu()
         OrderDb.orders = db.getOrders()

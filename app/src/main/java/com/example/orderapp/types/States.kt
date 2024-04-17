@@ -33,6 +33,7 @@ object Guest {
         //TODO save receipt to gallery
         //TODO submit the order to the db
         //TODO set id
+        //TODO order is changing in between submits
 
         val o = Order(0, table)
         o.products.addAll(order)

@@ -6,12 +6,11 @@ import com.example.orderapp.types.Order
 import com.example.orderapp.types.OrderProduct
 import com.example.orderapp.types.Product
 
-
-class ProductDTO(val id: String, val name: String, val prize: String, val category: String) {
+class ProductDTO(val id: String, val name: String, private val prize: String, val category: String) {
     fun toProduct() = Product(id.toInt(), name, prize.toInt())
 }
 
-class OrderProductDTO(val productId: String, val orderId: String, val quantity: String) {
+class OrderProductDTO(val productId: String, val orderId: String, private val quantity: String) {
     fun toOrderProduct(product: Product): OrderProduct {
         val orderProduct = OrderProduct(product)
         orderProduct.quantity = quantity.toInt()
@@ -19,7 +18,7 @@ class OrderProductDTO(val productId: String, val orderId: String, val quantity: 
     }
 }
 
-class OrderDTO(val id: String, val tableNumber: String) {
+class OrderDTO(val id: String, private val tableNumber: String) {
     fun toOrder(products: List<OrderProduct>): Order {
         val order = Order(id.toInt(), tableNumber.toInt())
         order.products.addAll(products)

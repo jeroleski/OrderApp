@@ -19,88 +19,86 @@ class DbWrapper : ViewModel() {
     }
 
     // HELPERS
-    private fun getAllMenuProducts(): List<ProductDTO> {
-        val products = mutableListOf<ProductDTO>()
+    private fun getAllMenuProducts() = sequence {
         val cursor = ProductCursorWrapper(db.query(DbSchema.Products.TABLE, null, null, null, null, null, null))
-        cursor.moveToFirst()
-        while (! cursor.isAfterLast) {
-            products.add(cursor.product)
-            cursor.moveToNext()
-        }
+        while (cursor.moveToNext())
+            yield(cursor.product)
         cursor.close()
-        return products
     }
 
-    private fun getAllOrderProduct(): List<OrderProductDTO> {
-        val orderProducts = mutableListOf<OrderProductDTO>()
+    private fun getAllOrderProduct() = sequence {
         val cursor = OrderProductCursorWrapper(db.query(DbSchema.OrderProducts.TABLE, null, null, null, null, null, null))
-        cursor.moveToFirst()
-        while (! cursor.isAfterLast) {
-            orderProducts.add(cursor.orderProduct)
-            cursor.moveToNext()
-        }
+        while (cursor.moveToNext())
+            yield(cursor.orderProduct)
         cursor.close()
-        return orderProducts
     }
 
-    private fun getAllOrdersOrder(): List<OrderDTO> {
-        val orders = mutableListOf<OrderDTO>()
+    private fun getAllOrdersOrder() = sequence {
         val cursor = OrderCursorWrapper(db.query(DbSchema.Orders.TABLE, null, null, null, null, null, null))
-        cursor.moveToFirst()
-        while (! cursor.isAfterLast) {
-            orders.add(cursor.order)
-            cursor.moveToNext()
-        }
+        while (cursor.moveToNext())
+            yield(cursor.order)
         cursor.close()
-        return orders
     }
 
     // GETTERS
     fun getMenu(): Menu {
-        val allProducts = getAllMenuProducts()
-        val categoryMap = mutableMapOf<String, MutableList<Product>>().withDefault { _ -> mutableListOf() }
-        for (p in allProducts) {
-            categoryMap.getValue(p.category).add(p.toProduct())
+        val categoryMap = mutableMapOf<String, MutableList<Product>>()
+        for (product in getAllMenuProducts()) {
+            val category = categoryMap.getOrPut(product.category) { mutableListOf() }
+            category.add(product.toProduct())
         }
 
-        val menuCategories = mutableListOf<Category>()
         var id = 0
-        for ((c, ps) in categoryMap) {
-            menuCategories.add(Category(id, c, ps))
-            id++
-        }
-
+        val menuCategories = categoryMap.map { (category, products) -> id++; Category(id, category, products) }
         return Menu(menuCategories)
     }
 
     fun getOrders(): MutableList<Order> {
         val allProducts = getAllMenuProducts()
-        val allOrderProducts = getAllOrderProduct()
-        val orderMap = mutableMapOf<String, MutableList<OrderProduct>>().withDefault { _ -> mutableListOf() }
-        for (orderProduct in allOrderProducts) {
-            val p = allProducts.find { p -> p.id == orderProduct.productId } ?: continue
-            val op = orderProduct.toOrderProduct(p.toProduct())
-            orderMap.getValue(orderProduct.orderId).add(op)
+
+        val orderMap = mutableMapOf<String, MutableList<OrderProduct>>()
+        for (orderProduct in getAllOrderProduct()) {
+            val product = allProducts.find { p -> p.id == orderProduct.productId } ?: continue
+
+            val order = orderMap.getOrPut(orderProduct.orderId) { mutableListOf() }
+            val op = orderProduct.toOrderProduct(product.toProduct())
+            order.add(op)
         }
 
-        val allOrders = getAllOrdersOrder()
         val orders = mutableListOf<Order>()
-        for (order in allOrders) {
+        for (order in getAllOrdersOrder()) {
             val products = orderMap[order.id] ?: continue
             orders.add(order.toOrder(products))
         }
-
         return orders
     }
 
     // SETTERS
-    fun addMenuProduct(p: Product, c: String) {
+    fun addMenuProduct(product: Product, category: Category) {
         val values = ContentValues()
-        values.put(DbSchema.Products.ID, p.id)
-        values.put(DbSchema.Products.NAME, p.name)
-        values.put(DbSchema.Products.PRIZE, p.prize)
-        values.put(DbSchema.Products.CATEGORY, c)
+        values.put(DbSchema.Products.ID, product.id)
+        values.put(DbSchema.Products.NAME, product.name)
+        values.put(DbSchema.Products.PRIZE, product.prize)
+        values.put(DbSchema.Products.CATEGORY, category.name)
         db.insert(DbSchema.Products.TABLE, null, values)
+    }
+
+    private fun addOrderProduct(orderProduct: OrderProduct, orderId: Int) {
+        val values = ContentValues()
+        values.put(DbSchema.OrderProducts.PRODUCT_ID, orderProduct.product.id)
+        values.put(DbSchema.OrderProducts.ORDER_ID, orderId)
+        values.put(DbSchema.OrderProducts.QUANTITY, orderProduct.quantity)
+        db.insert(DbSchema.OrderProducts.TABLE, null, values)
+    }
+
+    fun addOrder(order: Order) {
+        val values = ContentValues()
+        values.put(DbSchema.Orders.ID, order.id)
+        values.put(DbSchema.Orders.TABLE_NUMBER, order.tableNumber)
+        db.insert(DbSchema.Orders.TABLE, null, values)
+
+        for (orderProduct in order.products)
+            addOrderProduct(orderProduct, order.id)
     }
 }
 
@@ -116,7 +114,12 @@ class DbCreate(context: Context): SQLiteOpenHelper(context, NAME, null, VERSION)
         db.execSQL("create table ${DbSchema.Orders.TABLE}(${DbSchema.Orders.ID}, ${DbSchema.Orders.TABLE_NUMBER})")
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("drop table if exists ${DbSchema.Products.TABLE}")
+        db.execSQL("drop table if exists ${DbSchema.OrderProducts.TABLE}")
+        db.execSQL("drop table if exists ${DbSchema.Orders.TABLE}")
+        onCreate(db)
+    }
 }
 
 object DbSchema {

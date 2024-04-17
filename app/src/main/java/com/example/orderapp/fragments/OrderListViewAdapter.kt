@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.Button
+import android.widget.ExpandableListView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import com.example.orderapp.OrdersActivity
@@ -18,7 +19,8 @@ import com.example.orderapp.types.Waiter
 class OrderListViewAdapter(
     private val context: Context,
     private val groupList: List<Order>,
-    private val orderCollection: Map<String, List<OrderProduct>>)
+    private val orderCollection: Map<String, List<OrderProduct>>,
+    private val expandableListView: ExpandableListView) //TODO remove
     : BaseExpandableListAdapter() {
 
     override fun getGroupCount() = orderCollection.size
@@ -53,8 +55,21 @@ class OrderListViewAdapter(
         val btnDone: Button = view.findViewById(R.id.btnDone)
         btnDone.setOnClickListener {
             Waiter.finishOrder(order)
+            // reload orders activity
             val ordersIntent = Intent(context, OrdersActivity::class.java)
             startActivity(context, ordersIntent, null)
+        }
+
+        //override default expansion
+        view.setOnClickListener {
+            // Check if the ExpandableListView is currently expanded
+            if (expandableListView.isGroupExpanded(groupPosition)) {
+                // If it's expanded, collapse it
+                expandableListView.collapseGroup(groupPosition)
+            } else {
+                // If it's collapsed, expand it
+                expandableListView.expandGroup(groupPosition)
+            }
         }
 
         return view

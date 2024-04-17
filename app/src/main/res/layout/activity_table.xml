@@ -60,4 +60,14 @@
         app:layout_constraintEnd_toEndOf="@+id/btnNext"
         app:layout_constraintStart_toStartOf="@+id/btnNext"
         app:layout_constraintTop_toBottomOf="@+id/btnNext" />
+
+    <Button
+        android:id="@+id/btnDbReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/btn_dbReset"
+        app:layout_constraintEnd_toEndOf="@+id/btnServer"
+        app:layout_constraintStart_toStartOf="@+id/btnServer"
+        app:layout_constraintTop_toBottomOf="@+id/btnServer" />
 </androidx.constraintlayout.widget.ConstraintLayout>

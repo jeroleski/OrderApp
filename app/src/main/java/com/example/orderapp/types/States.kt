@@ -1,6 +1,7 @@
 package com.example.orderapp.types
 
-import com.example.orderapp.network.OrderDb
+import com.example.orderapp.network.DbWrapper
+import kotlin.random.Random
 
 object Guest {
     var table: Int = 0
@@ -31,14 +32,10 @@ object Guest {
 
     fun submitOrder() {
         //TODO save receipt to gallery
-        //TODO submit the order to the db
-        //TODO set id
         //TODO order is changing in between submits
-
-        val o = Order(0, table)
-        o.products.addAll(order)
-        OrderDb.orders.add(o)
-        order.clear()
+        val o = Order(Random(order.size).nextInt(), table, order)
+        DbWrapper.addOrder(o)
+        order = mutableListOf()
     }
 
     fun totalCount() = order.fold(0) { acc, op -> acc + op.quantity }
@@ -49,13 +46,13 @@ object Guest {
 //object Server {
 //    val orders: MutableList<Order> = mutableListOf()
 //
-//    fun getFilteredOrders(): MutableList<Order> {
+//    fun filterOrders(orders: List<Order>): MutableList<Order> {
 //        //TODO apply filter
-//        return orders
+//        return orders.toMutableList()
 //    }
 //
 //    fun finishOrder(order: Order) {
 //        orders.remove(order)
-//        OrderDb.finishOrder(order)
+//        DbWrapper.removeOrder(order)
 //    }
 //}

@@ -13,6 +13,4 @@ class OrderProduct(val product: Product) {
     }
 }
 
-class Order(val id: Int, val tableNumber: Int) {
-    val products: MutableList<OrderProduct> = mutableListOf()
-}
+class Order(val id: Int, val tableNumber: Int, val products: List<OrderProduct>)

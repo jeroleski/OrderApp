@@ -20,6 +20,7 @@
     <string name="btn_tableNumber">Table Number: %1$d</string>
     <string name="btn_next">See Menu</string>
     <string name="btn_server">See Orders</string>
+    <string name="btn_dbReset">Reset Database</string>
     <string name="btn_basket">Your Basket</string>
     <string name="btn_menu">Back To Menu</string>
     <string name="btn_submit">Submit Order</string>

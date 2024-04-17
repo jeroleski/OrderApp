@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ExpandableListView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.orderapp.fragments.MenuListViewAdapter
-import com.example.orderapp.network.MenuDb
+import com.example.orderapp.network.DbWrapper
 import com.example.orderapp.types.Guest
 
 class MenuActivity : AppCompatActivity() {
@@ -30,16 +29,16 @@ class MenuActivity : AppCompatActivity() {
             startActivity(basketIntent)
         }
 
-        val groupList = MenuDb.menu.categories
-        val menuCollection = MenuDb.menu.categories.associateBy({ c -> c.name }, { c -> c.products })
+        val groupList = DbWrapper.menu.categories
+        val menuCollection = DbWrapper.menu.categories.associateBy({ c -> c.name }, { c -> c.products })
         val expandableListView: ExpandableListView = findViewById(R.id.listMenu)
         val expandableListAdapter = MenuListViewAdapter(this, groupList, menuCollection)
         expandableListView.setAdapter(expandableListAdapter)
         var lastExpandedPosition = -1
-        expandableListView.setOnGroupExpandListener(ExpandableListView.OnGroupExpandListener { i ->
+        expandableListView.setOnGroupExpandListener { i ->
             if (lastExpandedPosition != -1 && i != lastExpandedPosition)
                 expandableListView.collapseGroup(lastExpandedPosition)
             lastExpandedPosition = i
-        })
+        }
     }
 }

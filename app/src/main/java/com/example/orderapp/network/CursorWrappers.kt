@@ -19,11 +19,7 @@ class OrderProductDTO(val productId: String, val orderId: String, private val qu
 }
 
 class OrderDTO(val id: String, private val tableNumber: String) {
-    fun toOrder(products: List<OrderProduct>): Order {
-        val order = Order(id.toInt(), tableNumber.toInt())
-        order.products.addAll(products)
-        return order
-    }
+    fun toOrder(products: List<OrderProduct>) = Order(id.toInt(), tableNumber.toInt(), products)
 }
 
 class ProductCursorWrapper(cursor: Cursor) : CursorWrapper(cursor) {

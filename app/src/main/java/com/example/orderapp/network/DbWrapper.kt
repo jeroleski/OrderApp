@@ -3,37 +3,50 @@ package com.example.orderapp.network
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import androidx.lifecycle.ViewModel
+import com.example.orderapp.network.DbMigrator.assertMigrated
+import com.example.orderapp.network.DbMigrator.menuMockData
 import com.example.orderapp.types.Category
 import com.example.orderapp.types.Menu
 import com.example.orderapp.types.Order
 import com.example.orderapp.types.OrderProduct
 import com.example.orderapp.types.Product
 
-class DbWrapper : ViewModel() {
+object DbWrapper : ViewModel() {
     private lateinit var db: SQLiteDatabase
+    var menu = menuMockData()
+    var orders = DbMigrator.ordersMockData()
 
     fun initialize(context: Context) {
         db = DbCreate(context.applicationContext).writableDatabase
+
+        menu = readMenu()
+        orders = readOrders()
+        assertMigrated()
+    }
+
+    fun clear(context: Context) {
+        val dbCreate = DbCreate(context.applicationContext)
+        dbCreate.onUpgrade(db, DbCreate.VERSION, DbCreate.VERSION)
+        db = dbCreate.writableDatabase
     }
 
     // HELPERS
-    private fun getAllMenuProducts() = sequence {
+    private fun readAllMenuProducts() = sequence {
         val cursor = ProductCursorWrapper(db.query(DbSchema.Products.TABLE, null, null, null, null, null, null))
         while (cursor.moveToNext())
             yield(cursor.product)
         cursor.close()
     }
 
-    private fun getAllOrderProduct() = sequence {
+    private fun readAllOrderProduct() = sequence {
         val cursor = OrderProductCursorWrapper(db.query(DbSchema.OrderProducts.TABLE, null, null, null, null, null, null))
         while (cursor.moveToNext())
             yield(cursor.orderProduct)
         cursor.close()
     }
 
-    private fun getAllOrdersOrder() = sequence {
+    private fun readAllOrdersOrder() = sequence {
         val cursor = OrderCursorWrapper(db.query(DbSchema.Orders.TABLE, null, null, null, null, null, null))
         while (cursor.moveToNext())
             yield(cursor.order)
@@ -41,9 +54,9 @@ class DbWrapper : ViewModel() {
     }
 
     // GETTERS
-    fun getMenu(): Menu {
+    fun readMenu(): Menu {
         val categoryMap = mutableMapOf<String, MutableList<Product>>()
-        for (product in getAllMenuProducts()) {
+        for (product in readAllMenuProducts()) {
             val category = categoryMap.getOrPut(product.category) { mutableListOf() }
             category.add(product.toProduct())
         }
@@ -53,11 +66,11 @@ class DbWrapper : ViewModel() {
         return Menu(menuCategories)
     }
 
-    fun getOrders(): MutableList<Order> {
-        val allProducts = getAllMenuProducts()
+    fun readOrders(): MutableList<Order> {
+        val allProducts = readAllMenuProducts()
 
         val orderMap = mutableMapOf<String, MutableList<OrderProduct>>()
-        for (orderProduct in getAllOrderProduct()) {
+        for (orderProduct in readAllOrderProduct()) {
             val product = allProducts.find { p -> p.id == orderProduct.productId } ?: continue
 
             val order = orderMap.getOrPut(orderProduct.orderId) { mutableListOf() }
@@ -66,7 +79,7 @@ class DbWrapper : ViewModel() {
         }
 
         val orders = mutableListOf<Order>()
-        for (order in getAllOrdersOrder()) {
+        for (order in readAllOrdersOrder()) {
             val products = orderMap[order.id] ?: continue
             orders.add(order.toOrder(products))
         }
@@ -100,47 +113,8 @@ class DbWrapper : ViewModel() {
         for (orderProduct in order.products)
             addOrderProduct(orderProduct, order.id)
     }
-}
 
-class DbCreate(context: Context): SQLiteOpenHelper(context, NAME, null, VERSION) {
-    companion object {
-        const val NAME = "order_app.db"
-        const val VERSION = 1
-    }
-
-    override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL("create table ${DbSchema.Products.TABLE}(${DbSchema.Products.ID}, ${DbSchema.Products.NAME}, ${DbSchema.Products.PRIZE}, ${DbSchema.Products.CATEGORY})")
-        db.execSQL("create table ${DbSchema.OrderProducts.TABLE}(${DbSchema.OrderProducts.PRODUCT_ID}, ${DbSchema.OrderProducts.ORDER_ID}, ${DbSchema.OrderProducts.QUANTITY})")
-        db.execSQL("create table ${DbSchema.Orders.TABLE}(${DbSchema.Orders.ID}, ${DbSchema.Orders.TABLE_NUMBER})")
-    }
-
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("drop table if exists ${DbSchema.Products.TABLE}")
-        db.execSQL("drop table if exists ${DbSchema.OrderProducts.TABLE}")
-        db.execSQL("drop table if exists ${DbSchema.Orders.TABLE}")
-        onCreate(db)
-    }
-}
-
-object DbSchema {
-    object Products {
-        const val TABLE = "Products"
-        const val ID = "id"
-        const val NAME = "name"
-        const val PRIZE = "prize"
-        const val CATEGORY = "category"
-    }
-
-    object OrderProducts {
-        const val TABLE = "OrderProduct"
-        const val PRODUCT_ID = "product_id"
-        const val ORDER_ID = "order_id"
-        const val QUANTITY = "quantity"
-    }
-
-    object Orders {
-        const val TABLE = "Orders"
-        const val ID = "id"
-        const val TABLE_NUMBER = "table_number"
-    }
+//    fun removeOrder(order: Order) {
+//        //TODO implement remove using id
+//    }
 }

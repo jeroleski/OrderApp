@@ -33,7 +33,7 @@ object Guest {
     fun submitOrder() {
         //TODO save receipt to gallery
         //TODO order is changing in between submits
-        val o = Order(Random(order.size).nextInt(), table, order)
+        val o = Order(Random.nextInt(), table, order)
         DbWrapper.addOrder(o)
         order = mutableListOf()
     }

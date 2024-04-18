@@ -9,6 +9,7 @@ import com.google.firebase.firestore.toObject
 
 class DbInterface {
     private val db = Firebase.firestore
+    //TODO save instances to cache or here
 
     companion object {
         const val MENU_COLLECTION = "Menu"

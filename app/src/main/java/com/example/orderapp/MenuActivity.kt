@@ -30,19 +30,7 @@ class MenuActivity : AppCompatActivity() {
             startActivity(basketIntent)
         }
 
-        //TODO remove
-//        val groupList = DbWrapper.menu.categories
-//        val menuCollection = DbWrapper.menu.categories.associateBy({ c -> c.name }, { c -> c.products })
-//        val expandableListView: ExpandableListView = findViewById(R.id.listMenu)
-//        val expandableListAdapter = MenuListViewAdapter(this, groupList, menuCollection)
-//        expandableListView.setAdapter(expandableListAdapter)
-//        var lastExpandedPosition = -1
-//        expandableListView.setOnGroupExpandListener { i ->
-//            if (lastExpandedPosition != -1 && i != lastExpandedPosition)
-//                expandableListView.collapseGroup(lastExpandedPosition)
-//            lastExpandedPosition = i
-//        }
-
+        //TODO display message while loading
         DbInterface().readMenu { menu ->
             val groupList = menu.categories
             val menuCollection = menu.categories.associateBy({ c -> c.name }, { c -> c.products })

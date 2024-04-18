@@ -7,7 +7,6 @@ import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.orderapp.fragments.OrderListViewAdapter
 import com.example.orderapp.network.DbInterface
-import com.example.orderapp.types.Waiter
 
 class OrdersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +27,7 @@ class OrdersActivity : AppCompatActivity() {
             startActivity(filterIntent)
         }
 
+        //TODO display message while loading
         DbInterface().readInbox { inbox ->
             val groupList = inbox.orders
             val orderCollection = inbox.orders

@@ -30,7 +30,7 @@ class OrdersActivity : AppCompatActivity() {
         val groupList = Waiter.getFilteredOrders()
         val orderCollection = Waiter.getFilteredOrders().associateBy({ o -> o.id.toString() }, { o -> o.products })
         val expandableListView: ExpandableListView = findViewById(R.id.listOrders)
-        val expandableListAdapter = OrderListViewAdapter(this, groupList, orderCollection, expandableListView)
+        val expandableListAdapter = OrderListViewAdapter(this, groupList, orderCollection)
         expandableListView.setAdapter(expandableListAdapter)
         var lastExpandedPosition = -1
         expandableListView.setOnGroupExpandListener { i ->

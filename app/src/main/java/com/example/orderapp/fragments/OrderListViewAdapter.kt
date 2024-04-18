@@ -1,5 +1,6 @@
 package com.example.orderapp.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -19,8 +20,7 @@ import com.example.orderapp.types.Waiter
 class OrderListViewAdapter(
     private val context: Context,
     private val groupList: List<Order>,
-    private val orderCollection: Map<String, List<OrderProduct>>,
-    private val expandableListView: ExpandableListView) //TODO remove
+    private val orderCollection: Map<String, List<OrderProduct>>)
     : BaseExpandableListAdapter() {
 
     override fun getGroupCount() = orderCollection.size
@@ -60,6 +60,9 @@ class OrderListViewAdapter(
             startActivity(context, ordersIntent, null)
         }
 
+        val expandableListView: ExpandableListView = with(context as Activity) {
+            this.findViewById(R.id.listOrders)
+        }
         //override default expansion
         view.setOnClickListener {
             // Check if the ExpandableListView is currently expanded

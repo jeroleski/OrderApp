@@ -7,7 +7,6 @@ import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.orderapp.fragments.MenuListViewAdapter
 import com.example.orderapp.network.DbInterface
-import com.example.orderapp.network.DbWrapper
 import com.example.orderapp.types.Guest
 
 class MenuActivity : AppCompatActivity() {

@@ -38,6 +38,7 @@ class TableActivity : AppCompatActivity() {
 
             //TODO remove
             DbInterface().addMenu(DbMigrator.menuMockData())
+            DbInterface().addInbox(DbMigrator.inboxMockData())
         }
 
         DbWrapper.initialize(this)

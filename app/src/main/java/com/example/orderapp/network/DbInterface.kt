@@ -17,22 +17,6 @@ class DbInterface {
         const val INBOX_DOCUMENT = "100"
     }
 
-//    fun readMenu(callback: (Menu) -> Unit) {
-//        val tag = "DbInterface.readMenu()"
-//        db.collection(MENU_COLLECTION)
-//            .document(MENU_DOCUMENT)
-//            .get()
-//            .addOnSuccessListener { document ->
-//                document
-//                    ?.toObject<Menu>()
-//                    ?.let { menu -> callback(menu) }
-//                    ?: Log.d(tag, "No such document")
-//            }
-//            .addOnFailureListener { e ->
-//                Log.d(tag, "get failed with ", e)
-//            }
-//    }
-
     private inline fun <reified DATA> readDocument(collection: String, documentId: String, crossinline callback: (DATA) -> Unit, tag: String) {
         db.collection(collection)
             .document(documentId)
@@ -40,7 +24,10 @@ class DbInterface {
             .addOnSuccessListener { document ->
                 document
                     ?.toObject<DATA>()
-                    ?.let { data -> callback(data) }
+                    ?.let { data ->
+                        Log.d(tag, "DocumentSnapshot data: ${document.data}")
+                        callback(data)
+                    }
                     ?: Log.d(tag, "No such document")
             }
             .addOnFailureListener { e ->
@@ -50,6 +37,9 @@ class DbInterface {
 
     fun readMenu(callback: (Menu) -> Unit) =
         readDocument<Menu>(MENU_COLLECTION, MENU_DOCUMENT, callback, "DbInterface.readMenu()")
+
+    fun readInbox(callback: (Inbox) -> Unit) =
+        readDocument<Inbox>(INBOX_COLLECTION, INBOX_DOCUMENT, callback, "DbInterface.readInbox()")
 
     private fun addDocument(collection: String, documentId: String, data: Any, tag: String) {
         db.collection(collection)
@@ -67,5 +57,5 @@ class DbInterface {
         addDocument(MENU_COLLECTION, MENU_DOCUMENT, menu, "DbInterface.addMenu()")
 
     fun addInbox(inbox: Inbox) =
-        addDocument(INBOX_COLLECTION, INBOX_DOCUMENT, inbox, "DbInterface.addIndox()")
+        addDocument(INBOX_COLLECTION, INBOX_DOCUMENT, inbox, "DbInterface.addInbox()")
 }

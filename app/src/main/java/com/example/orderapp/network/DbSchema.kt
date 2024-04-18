@@ -1,7 +1,5 @@
 package com.example.orderapp.network
 
-import android.view.Menu
-
 object DbSchema {
     object Products {
         const val TABLE = "Product"
@@ -22,11 +20,5 @@ object DbSchema {
         const val TABLE = "Orders"
         const val ID = "id"
         const val TABLE_NUMBER = "table_number"
-    }
-
-    //TODO change
-    object Fire {
-        const val MENU_COLLECTION = "Menu"
-        const val MENU_ID = "0"
     }
 }

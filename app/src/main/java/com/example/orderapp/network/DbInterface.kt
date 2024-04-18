@@ -1,67 +1,71 @@
 package com.example.orderapp.network
 
 import android.util.Log
+import com.example.orderapp.types.Inbox
 import com.example.orderapp.types.Menu
-import com.example.orderapp.types.Product
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 
 class DbInterface {
     private val db = Firebase.firestore
 
-    fun <T> fetchNestedObjects(docRefList: List<DocumentReference>) {
-        // Assuming docRefList is a list of DocumentReference objects
-
-        // Fetch all documents referenced by DocumentReference objects concurrently
-        val tasks = docRefList.map { it.get() }
-
-        // Wait for all tasks to complete
-        Tasks.whenAllSuccess<QuerySnapshot>(tasks)
-            .addOnSuccessListener { querySnapshots ->
-                // Process each QuerySnapshot to extract nested objects
-                for (querySnapshot in querySnapshots) {
-                    for (document in querySnapshot.documents) {
-                        // Parse each document to nested object
-                        val nestedObject = document.toObject<Product>()
-                        // Do something with nestedObject
-                    }
-                }
-            }
-            .addOnFailureListener { e ->
-                // Handle any errors
-            }
+    companion object {
+        const val MENU_COLLECTION = "Menu"
+        const val MENU_DOCUMENT = "0"
+        const val INBOX_COLLECTION = "Inbox"
+        const val INBOX_DOCUMENT = "100"
     }
 
-    fun readMenu(callback: (Menu) -> Unit) {
-        db.collection("Menu")
-            .document(DbSchema.Fire.MENU_ID)
+//    fun readMenu(callback: (Menu) -> Unit) {
+//        val tag = "DbInterface.readMenu()"
+//        db.collection(MENU_COLLECTION)
+//            .document(MENU_DOCUMENT)
+//            .get()
+//            .addOnSuccessListener { document ->
+//                document
+//                    ?.toObject<Menu>()
+//                    ?.let { menu -> callback(menu) }
+//                    ?: Log.d(tag, "No such document")
+//            }
+//            .addOnFailureListener { e ->
+//                Log.d(tag, "get failed with ", e)
+//            }
+//    }
+
+    private inline fun <reified DATA> readDocument(collection: String, documentId: String, crossinline callback: (DATA) -> Unit, tag: String) {
+        db.collection(collection)
+            .document(documentId)
             .get()
             .addOnSuccessListener { document ->
-//                document?.toObject<Menu>()?.let(callback) ?:
-//                    Log.d("readMenu()", "No such document")
-                if (document != null) {
-                    Log.d("readMenu()", "DocumentSnapshot data: ${document.data}")
-                    val q = document.toObject<Menu>()
-                    if (q is Menu)
-                        callback(q)
-                    else
-                        Log.d("readMenu()", "cannot be parsed ")
-                } else {
-                    Log.d("readMenu()", "No such document")
-                }
+                document
+                    ?.toObject<DATA>()
+                    ?.let { data -> callback(data) }
+                    ?: Log.d(tag, "No such document")
             }
-            .addOnFailureListener { exception ->
-                Log.d("readMenu()", "get failed with ", exception)
+            .addOnFailureListener { e ->
+                Log.d(tag, "get failed with ", e)
             }
     }
 
-    fun addMenu(menu: Menu) {
-        db.collection("Menu")
-            .document(menu.documentId)
-            .set(menu)
+    fun readMenu(callback: (Menu) -> Unit) =
+        readDocument<Menu>(MENU_COLLECTION, MENU_DOCUMENT, callback, "DbInterface.readMenu()")
+
+    private fun addDocument(collection: String, documentId: String, data: Any, tag: String) {
+        db.collection(collection)
+            .document(documentId)
+            .set(data)
+            .addOnSuccessListener {
+                Log.d(tag, "DocumentSnapshot successfully written!")
+            }
+            .addOnFailureListener { e ->
+                Log.w(tag, "Error writing document", e)
+            }
     }
+
+    fun addMenu(menu: Menu) =
+        addDocument(MENU_COLLECTION, MENU_DOCUMENT, menu, "DbInterface.addMenu()")
+
+    fun addInbox(inbox: Inbox) =
+        addDocument(INBOX_COLLECTION, INBOX_DOCUMENT, inbox, "DbInterface.addIndox()")
 }

@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.orderapp.fragments.MenuListViewAdapter
+import com.example.orderapp.network.DbInterface
 import com.example.orderapp.network.DbWrapper
 import com.example.orderapp.types.Guest
 
@@ -29,16 +30,30 @@ class MenuActivity : AppCompatActivity() {
             startActivity(basketIntent)
         }
 
-        val groupList = DbWrapper.menu.categories
-        val menuCollection = DbWrapper.menu.categories.associateBy({ c -> c.name }, { c -> c.products })
-        val expandableListView: ExpandableListView = findViewById(R.id.listMenu)
-        val expandableListAdapter = MenuListViewAdapter(this, groupList, menuCollection)
-        expandableListView.setAdapter(expandableListAdapter)
-        var lastExpandedPosition = -1
-        expandableListView.setOnGroupExpandListener { i ->
-            if (lastExpandedPosition != -1 && i != lastExpandedPosition)
-                expandableListView.collapseGroup(lastExpandedPosition)
-            lastExpandedPosition = i
+//        val groupList = DbWrapper.menu.categories
+//        val menuCollection = DbWrapper.menu.categories.associateBy({ c -> c.name }, { c -> c.products })
+//        val expandableListView: ExpandableListView = findViewById(R.id.listMenu)
+//        val expandableListAdapter = MenuListViewAdapter(this, groupList, menuCollection)
+//        expandableListView.setAdapter(expandableListAdapter)
+//        var lastExpandedPosition = -1
+//        expandableListView.setOnGroupExpandListener { i ->
+//            if (lastExpandedPosition != -1 && i != lastExpandedPosition)
+//                expandableListView.collapseGroup(lastExpandedPosition)
+//            lastExpandedPosition = i
+//        }
+
+        DbInterface().readMenu { menu ->
+            val groupList = menu.categories
+            val menuCollection = menu.categories.associateBy({ c -> c.name }, { c -> c.products })
+            val expandableListView: ExpandableListView = findViewById(R.id.listMenu)
+            val expandableListAdapter = MenuListViewAdapter(this, groupList, menuCollection)
+            expandableListView.setAdapter(expandableListAdapter)
+            var lastExpandedPosition = -1
+            expandableListView.setOnGroupExpandListener { i ->
+                if (lastExpandedPosition != -1 && i != lastExpandedPosition)
+                    expandableListView.collapseGroup(lastExpandedPosition)
+                lastExpandedPosition = i
+            }
         }
     }
 }

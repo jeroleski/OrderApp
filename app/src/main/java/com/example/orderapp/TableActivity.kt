@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.example.orderapp.network.DbInterface
 import com.example.orderapp.network.DbMigrator
 import com.example.orderapp.network.DbWrapper
 import com.example.orderapp.types.Guest
@@ -34,6 +35,9 @@ class TableActivity : AppCompatActivity() {
         val btnDbReset: Button = findViewById(R.id.btnDbReset)
         btnDbReset.setOnClickListener {
             DbMigrator.resetMigration(this)
+
+            //TODO remove
+            DbInterface().addMenu(DbMigrator.menuMockData())
         }
 
         DbWrapper.initialize(this)

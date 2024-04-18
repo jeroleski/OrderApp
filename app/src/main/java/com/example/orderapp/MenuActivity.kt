@@ -30,6 +30,7 @@ class MenuActivity : AppCompatActivity() {
             startActivity(basketIntent)
         }
 
+        //TODO remove
 //        val groupList = DbWrapper.menu.categories
 //        val menuCollection = DbWrapper.menu.categories.associateBy({ c -> c.name }, { c -> c.products })
 //        val expandableListView: ExpandableListView = findViewById(R.id.listMenu)

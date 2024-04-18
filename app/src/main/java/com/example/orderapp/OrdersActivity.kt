@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ExpandableListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.orderapp.fragments.OrderListViewAdapter
+import com.example.orderapp.network.DbInterface
 import com.example.orderapp.types.Waiter
 
 class OrdersActivity : AppCompatActivity() {
@@ -27,16 +28,19 @@ class OrdersActivity : AppCompatActivity() {
             startActivity(filterIntent)
         }
 
-        val groupList = Waiter.getFilteredOrders()
-        val orderCollection = Waiter.getFilteredOrders().associateBy({ o -> o.documentId }, { o -> o.orderProducts })
-        val expandableListView: ExpandableListView = findViewById(R.id.listOrders)
-        val expandableListAdapter = OrderListViewAdapter(this, groupList, orderCollection)
-        expandableListView.setAdapter(expandableListAdapter)
-        var lastExpandedPosition = -1
-        expandableListView.setOnGroupExpandListener { i ->
-            if (lastExpandedPosition != -1 && i != lastExpandedPosition)
-                expandableListView.collapseGroup(lastExpandedPosition)
-            lastExpandedPosition = i
+        DbInterface().readInbox { inbox ->
+            val groupList = inbox.orders
+            val orderCollection = inbox.orders
+                .associateBy({ o -> o.documentId }, { o -> o.orderProducts })
+            val expandableListView: ExpandableListView = findViewById(R.id.listOrders)
+            val expandableListAdapter = OrderListViewAdapter(this, groupList, orderCollection)
+            expandableListView.setAdapter(expandableListAdapter)
+            var lastExpandedPosition = -1
+            expandableListView.setOnGroupExpandListener { i ->
+                if (lastExpandedPosition != -1 && i != lastExpandedPosition)
+                    expandableListView.collapseGroup(lastExpandedPosition)
+                lastExpandedPosition = i
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.example.orderapp.types
 
 import com.example.orderapp.network.DbWrapper
-import kotlin.random.Random
 
 object Guest {
     var table: Int = 0
@@ -33,7 +32,7 @@ object Guest {
     fun submitOrder() {
         //TODO save receipt to gallery
         //TODO order is changing in between submits
-        val o = Order(Random.nextInt(), table, order)
+        val o = Order(table, order)
         DbWrapper.addOrder(o)
         order = mutableListOf()
     }
@@ -46,12 +45,12 @@ object Guest {
 object Waiter {
     fun getFilteredOrders(): List<Order> {
         //TODO apply filter
-        return DbWrapper.orders
+        return DbWrapper.inbox.orders
     }
 
     fun finishOrder(order: Order) {
         //TODO change responsibility
-        DbWrapper.orders.remove(order)
+        DbWrapper.inbox.orders.remove(order)
         DbWrapper.removeOrder(order)
     }
 }

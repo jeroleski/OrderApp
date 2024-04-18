@@ -5,8 +5,10 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import androidx.lifecycle.ViewModel
 import com.example.orderapp.network.DbMigrator.assertMigrated
+import com.example.orderapp.network.DbMigrator.inboxMockData
 import com.example.orderapp.network.DbMigrator.menuMockData
 import com.example.orderapp.types.Category
+import com.example.orderapp.types.Inbox
 import com.example.orderapp.types.Menu
 import com.example.orderapp.types.Order
 import com.example.orderapp.types.OrderProduct
@@ -15,13 +17,13 @@ import com.example.orderapp.types.Product
 object DbWrapper : ViewModel() {
     private lateinit var db: SQLiteDatabase
     var menu = menuMockData()
-    var orders = DbMigrator.ordersMockData()
+    var inbox = inboxMockData()
 
     fun initialize(context: Context) {
         db = DbCreate(context.applicationContext).writableDatabase
 
         menu = readMenu()
-        orders = readOrders()
+        inbox = readInbox()
         assertMigrated()
     }
 
@@ -62,11 +64,11 @@ object DbWrapper : ViewModel() {
         }
 
         var id = 0
-        val menuCategories = categoryMap.map { (category, products) -> id++; Category(id, category, products) }
+        val menuCategories = categoryMap.map { (category, products) -> id++; Category(category, products, id.toString()) }
         return Menu(menuCategories)
     }
 
-    fun readOrders(): MutableList<Order> {
+    fun readInbox(): Inbox {
         val allProducts = readAllMenuProducts()
 
         val orderMap = mutableMapOf<String, MutableList<OrderProduct>>()
@@ -83,39 +85,39 @@ object DbWrapper : ViewModel() {
             val products = orderMap[order.id] ?: continue
             orders.add(order.toOrder(products))
         }
-        return orders
+        return Inbox(orders)
     }
 
     // SETTERS
     fun addMenuProduct(product: Product, category: Category) {
         val values = ContentValues()
-        values.put(DbSchema.Products.ID, product.id)
+        values.put(DbSchema.Products.ID, product.documentId)
         values.put(DbSchema.Products.NAME, product.name)
         values.put(DbSchema.Products.PRIZE, product.prize)
         values.put(DbSchema.Products.CATEGORY, category.name)
         db.insert(DbSchema.Products.TABLE, null, values)
     }
 
-    private fun addOrderProduct(orderProduct: OrderProduct, orderId: Int) {
+    private fun addOrderProduct(orderProduct: OrderProduct, order: Order) {
         val values = ContentValues()
-        values.put(DbSchema.OrderProducts.PRODUCT_ID, orderProduct.product.id)
-        values.put(DbSchema.OrderProducts.ORDER_ID, orderId)
+        values.put(DbSchema.OrderProducts.PRODUCT_ID, orderProduct.product.documentId)
+        values.put(DbSchema.OrderProducts.ORDER_ID, order.documentId)
         values.put(DbSchema.OrderProducts.QUANTITY, orderProduct.quantity)
         db.insert(DbSchema.OrderProducts.TABLE, null, values)
     }
 
     fun addOrder(order: Order) {
         val values = ContentValues()
-        values.put(DbSchema.Orders.ID, order.id)
+        values.put(DbSchema.Orders.ID, order.documentId)
         values.put(DbSchema.Orders.TABLE_NUMBER, order.tableNumber)
         db.insert(DbSchema.Orders.TABLE, null, values)
 
-        for (orderProduct in order.products)
-            addOrderProduct(orderProduct, order.id)
+        for (orderProduct in order.orderProducts)
+            addOrderProduct(orderProduct, order)
     }
 
     fun removeOrder(order: Order) {
-        db.delete(DbSchema.Orders.TABLE, "${DbSchema.Orders.ID} = ?", arrayOf(order.id.toString()))
-        db.delete(DbSchema.OrderProducts.TABLE, "${DbSchema.OrderProducts.ORDER_ID} = ?", arrayOf(order.id.toString()))
+        db.delete(DbSchema.Orders.TABLE, "${DbSchema.Orders.ID} = ?", arrayOf(order.documentId))
+        db.delete(DbSchema.OrderProducts.TABLE, "${DbSchema.OrderProducts.ORDER_ID} = ?", arrayOf(order.documentId))
     }
 }

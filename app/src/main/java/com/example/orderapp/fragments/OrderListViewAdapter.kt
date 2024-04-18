@@ -25,14 +25,14 @@ class OrderListViewAdapter(
 
     override fun getGroupCount() = orderCollection.size
 
-    override fun getChildrenCount(groupPosition: Int) = orderCollection[groupList[groupPosition].id.toString()]?.size ?: -1
+    override fun getChildrenCount(groupPosition: Int) = orderCollection[groupList[groupPosition].documentId]?.size ?: -1
 
     override fun getGroup(groupPosition: Int) = groupList[groupPosition]
 
-    override fun getChild(groupPosition: Int, childPosition: Int) = orderCollection[groupList[groupPosition].id.toString()]?.get(childPosition) as OrderProduct
-    override fun getGroupId(groupPosition: Int) = getGroup(groupPosition).id.toLong()
+    override fun getChild(groupPosition: Int, childPosition: Int) = orderCollection[groupList[groupPosition].documentId]?.get(childPosition) as OrderProduct
+    override fun getGroupId(groupPosition: Int) = groupPosition.toLong()
 
-    override fun getChildId(groupPosition: Int, childPosition: Int) = getChild(groupPosition, childPosition).product.id.toLong()
+    override fun getChildId(groupPosition: Int, childPosition: Int) = childPosition.toLong()
 
     override fun hasStableIds() = true
 
@@ -47,7 +47,7 @@ class OrderListViewAdapter(
         val view: View = if (convertView != null) convertView
         else {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            inflater.inflate(R.layout.fragment_orders_order, null)
+            inflater.inflate(R.layout.fragment_orders_order, parent, false)
         }
 
         val tvOrderTable: TextView = view.findViewById(R.id.tvOrderTable)
@@ -90,7 +90,7 @@ class OrderListViewAdapter(
         val view: View = if (convertView != null) convertView
         else {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            inflater.inflate(R.layout.fragment_orders_product, null)
+            inflater.inflate(R.layout.fragment_orders_product, parent, false)
         }
 
         val tvProductName: TextView = view.findViewById(R.id.tvProductName)

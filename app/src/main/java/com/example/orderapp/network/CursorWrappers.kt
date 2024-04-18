@@ -7,7 +7,7 @@ import com.example.orderapp.types.OrderProduct
 import com.example.orderapp.types.Product
 
 class ProductDTO(val id: String, val name: String, private val prize: String, val category: String) {
-    fun toProduct() = Product(id.toInt(), name, prize.toInt())
+    fun toProduct() = Product(name, prize.toInt(), id)
 }
 
 class OrderProductDTO(val productId: String, val orderId: String, private val quantity: String) {
@@ -19,7 +19,7 @@ class OrderProductDTO(val productId: String, val orderId: String, private val qu
 }
 
 class OrderDTO(val id: String, private val tableNumber: String) {
-    fun toOrder(products: List<OrderProduct>) = Order(id.toInt(), tableNumber.toInt(), products)
+    fun toOrder(products: List<OrderProduct>) = Order(tableNumber.toInt(), products, id)
 }
 
 class ProductCursorWrapper(cursor: Cursor) : CursorWrapper(cursor) {

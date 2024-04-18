@@ -28,7 +28,7 @@ class OrdersActivity : AppCompatActivity() {
         }
 
         val groupList = Waiter.getFilteredOrders()
-        val orderCollection = Waiter.getFilteredOrders().associateBy({ o -> o.id.toString() }, { o -> o.products })
+        val orderCollection = Waiter.getFilteredOrders().associateBy({ o -> o.documentId }, { o -> o.orderProducts })
         val expandableListView: ExpandableListView = findViewById(R.id.listOrders)
         val expandableListAdapter = OrderListViewAdapter(this, groupList, orderCollection)
         expandableListView.setAdapter(expandableListAdapter)

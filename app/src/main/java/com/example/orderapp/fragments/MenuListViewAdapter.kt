@@ -26,9 +26,9 @@ class MenuListViewAdapter(
 
     override fun getChild(groupPosition: Int, childPosition: Int) = menuCollection[groupList[groupPosition].name]?.get(childPosition) as Product
 
-    override fun getGroupId(groupPosition: Int) = getGroup(groupPosition).id.toLong()
+    override fun getGroupId(groupPosition: Int) = groupPosition.toLong()
 
-    override fun getChildId(groupPosition: Int, childPosition: Int) = getChild(groupPosition, childPosition).id.toLong()
+    override fun getChildId(groupPosition: Int, childPosition: Int) = childPosition.toLong()
 
     override fun hasStableIds() = true
 
@@ -43,7 +43,7 @@ class MenuListViewAdapter(
         val view: View = if (convertView != null) convertView
         else {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            inflater.inflate(R.layout.fragment_menu_category, null)
+            inflater.inflate(R.layout.fragment_menu_category, parent, false)
         }
 
         val tvCategoryName: TextView = view.findViewById(R.id.tvCategoryName)
@@ -64,7 +64,7 @@ class MenuListViewAdapter(
         val view: View = if (convertView != null) convertView
         else {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            inflater.inflate(R.layout.fragment_menu_product, null)
+            inflater.inflate(R.layout.fragment_menu_product, parent, false)
         }
 
         val tvProductName: TextView = view.findViewById(R.id.tvProductName)

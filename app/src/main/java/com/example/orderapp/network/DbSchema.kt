@@ -2,7 +2,7 @@ package com.example.orderapp.network
 
 object DbSchema {
     object Products {
-        const val TABLE = "Products"
+        const val TABLE = "Product"
         const val ID = "id"
         const val NAME = "name"
         const val PRIZE = "prize"

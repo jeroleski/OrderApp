@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.orderapp.fragments.BasketRecyclerViewAdapter
 import com.example.orderapp.types.Guest
+import com.example.orderapp.utils.Screenshot
 
 class BasketActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +37,10 @@ class BasketActivity : AppCompatActivity() {
 
         val btnSubmit: Button = findViewById(R.id.btnSubmit)
         btnSubmit.setOnClickListener {
+
+            Screenshot(this)
+
+
             Guest.submitOrder()
             //Switch to menu activity
             val menuIntent = Intent(this, MenuActivity::class.java)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,7 +9,7 @@
         android:id="@+id/tvProductName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -17,28 +18,30 @@
         android:id="@+id/tvProductQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/menu_price"
         app:layout_constraintBottom_toBottomOf="@+id/tvProductName"
-        app:layout_constraintStart_toEndOf="@+id/tvProductName"
+        app:layout_constraintEnd_toStartOf="@+id/btnRmvProduct"
         app:layout_constraintTop_toTopOf="@+id/tvProductName" />
 
     <Button
         android:id="@+id/btnRmvProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="64dp"
         android:text="@string/btn_rmv"
         app:layout_constraintBottom_toBottomOf="@+id/tvProductName"
-        app:layout_constraintStart_toEndOf="@+id/tvProductQuantity"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddProduct"
         app:layout_constraintTop_toTopOf="@+id/tvProductName" />
 
     <TextView
         android:id="@+id/tvProductPrize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvProductName"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddProduct"
         app:layout_constraintStart_toEndOf="@+id/btnRmvProduct"
         app:layout_constraintTop_toTopOf="@+id/tvProductName" />
 
@@ -46,10 +49,10 @@
         android:id="@+id/btnAddProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/btn_add"
         app:layout_constraintBottom_toBottomOf="@+id/tvProductName"
-        app:layout_constraintStart_toEndOf="@+id/tvProductPrize"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvProductName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

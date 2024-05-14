@@ -20,12 +20,12 @@ class OrdersActivity : AppCompatActivity() {
             startActivity(tableIntent)
         }
 
-        val btnFilters: Button = findViewById(R.id.btnFilter)
-        btnFilters.setOnClickListener {
-            //Switch to filter activity
-            val filterIntent = Intent(this, FilterActivity::class.java)
-            startActivity(filterIntent)
-        }
+//        val btnFilters: Button = findViewById(R.id.btnFilter)
+//        btnFilters.setOnClickListener {
+//            //Switch to filter activity
+//            val filterIntent = Intent(this, FilterActivity::class.java)
+//            startActivity(filterIntent)
+//        }
 
         //TODO display message while loading
         DbInterface().readInbox { inbox ->

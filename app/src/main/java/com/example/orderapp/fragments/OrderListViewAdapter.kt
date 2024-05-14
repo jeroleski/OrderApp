@@ -13,9 +13,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import com.example.orderapp.OrdersActivity
 import com.example.orderapp.R
+import com.example.orderapp.network.DbInterface
 import com.example.orderapp.types.Order
 import com.example.orderapp.types.OrderProduct
-import com.example.orderapp.types.Waiter
 
 class OrderListViewAdapter(
     private val context: Context,
@@ -54,7 +54,7 @@ class OrderListViewAdapter(
         tvOrderTable.text = order.tableNumber.toString()
         val btnDone: Button = view.findViewById(R.id.btnDone)
         btnDone.setOnClickListener {
-            Waiter.finishOrder(order)
+            DbInterface().removeOrder(order)
             // reload orders activity
             val ordersIntent = Intent(context, OrdersActivity::class.java)
             startActivity(context, ordersIntent, null)

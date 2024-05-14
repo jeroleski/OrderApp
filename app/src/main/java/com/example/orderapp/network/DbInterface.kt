@@ -3,6 +3,7 @@ package com.example.orderapp.network
 import android.util.Log
 import com.example.orderapp.types.Inbox
 import com.example.orderapp.types.Menu
+import com.example.orderapp.types.Order
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
@@ -59,4 +60,17 @@ class DbInterface {
 
     fun addInbox(inbox: Inbox) =
         addDocument(INBOX_COLLECTION, INBOX_DOCUMENT, inbox, "DbInterface.addInbox()")
+
+    fun addOrder(order: Order) =
+        readInbox { inbox ->
+            inbox.orders.add(order)
+            addInbox(inbox)
+        }
+
+    fun removeOrder(order: Order) =
+        readInbox { inbox ->
+            inbox.orders.removeIf { o -> o.documentId == order.documentId }
+            addInbox(inbox)
+        }
+
 }

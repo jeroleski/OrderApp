@@ -1,5 +1,6 @@
 package com.example.orderapp.types
 
+import com.example.orderapp.network.DbInterface
 import com.example.orderapp.network.DbWrapper
 
 object Guest {
@@ -30,27 +31,12 @@ object Guest {
     }
 
     fun submitOrder() {
-        //TODO save receipt to gallery
-        //TODO order is changing in between submits
         val o = Order(table, order)
-        DbWrapper.addOrder(o)
+        DbInterface().addOrder(o)
         order = mutableListOf()
     }
 
     fun totalCount() = order.fold(0) { acc, op -> acc + op.quantity }
 
     fun totalPrice() = order.fold(0) { acc, op -> acc + (op.quantity * op.product.prize) }
-}
-
-object Waiter {
-    fun getFilteredOrders(): List<Order> {
-        //TODO apply filter
-        return DbWrapper.inbox.orders
-    }
-
-    fun finishOrder(order: Order) {
-        //TODO change responsibility
-        DbWrapper.inbox.orders.remove(order)
-        DbWrapper.removeOrder(order)
-    }
 }
